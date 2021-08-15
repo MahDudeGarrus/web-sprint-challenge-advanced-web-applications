@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 const Login = () => {
   const [ login, setLogin ] = useState({ 
     username: "", 
-    password: ""
+    password: "",
+    error: "",
   });
   
   const { push } = useHistory();
@@ -29,8 +30,7 @@ const Login = () => {
     })
   }
 
-  const error = "";
-  //replace with error state
+  const error = login.error;
 
   return (
     <div>
@@ -41,7 +41,7 @@ const Login = () => {
           <input id="username" name="username" value={login.username} onChange={handleChange} />
           <label htmlFor="password">Password: </label>
           <input id="password" name="password" value={login.password} onChange={handleChange} type="password"/>
-          <button type="submit">Login!</button>
+          <button type="submit" id="submit">Login!</button>
         </form>
       </div>
 
