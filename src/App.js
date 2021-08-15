@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import Login from "./components/Login";
 import "./styles.scss";
-
-//comment for testing codegrade
 
 function App() {
   return (
@@ -12,8 +10,14 @@ function App() {
       <div className="App">
         <header>
           Color Picker Sprint Challenge
-          <a data-testid="logoutButton" href="#">logout</a>
+          <Link to='/login'>login</Link>
+          <a data-testid="logoutButton" href="#">logout</a>        
         </header>
+        
+        <Switch>
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/' />
+        </Switch>
       </div>
     </Router>
   );
