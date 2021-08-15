@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const Login = () => {
   const [ login, setLogin ] = useState({ 
@@ -15,6 +16,13 @@ const Login = () => {
 
   const handleSubmit = event => {
     event.preventDefault()
+    axiosWithAuth().post('/login', login)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log("Error in login", error)
+    })
   }
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
