@@ -11,11 +11,8 @@ const BubblePage = () => {
 
   useEffect(() => {
     fetchColorService()
-      .then(response => {
-        console.log(response.data)
-        setColors(response.data)
-      })
-      .catch(error =>console.log("Error fetching colors:", error))
+      .then(response => setColors(response.data))
+      .catch(error => console.log("Error fetching colors:", error))
   }, [])
 
   const toggleEdit = (value) => {
