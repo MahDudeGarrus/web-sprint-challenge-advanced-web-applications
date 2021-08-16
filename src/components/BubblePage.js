@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
@@ -9,16 +8,14 @@ import { axiosWithAuth } from "../helpers/axiosWithAuth";
 const BubblePage = () => {
   const [colors, setColors] = useState([]);
   const [editing, setEditing] = useState(false);
-  const { push } = useHistory();
 
   useEffect(() => {
     fetchColorService()
-    .then(response => {
-      setColors(response.data);
-    })
-    .catch(error => {
-      console.log("Error fetching colors:", error)
-    })
+      .then(response => {
+        console.log(response.data)
+        setColors(response.data)
+      })
+      .catch(error =>console.log("Error fetching colors:", error))
   }, [])
 
   const toggleEdit = (value) => {
@@ -28,9 +25,15 @@ const BubblePage = () => {
   const saveEdit = (editColor) => {
 
     axiosWithAuth()
-    .put(`/colors/${editColor.id}`, colors)
+    .put(`/colors/${editColor.id}`, editColor)
     .then(response => {
-      setColors(response.data)
+      setColors(colors.map(color => {
+        if(color.id === Number(response.data.id)) {
+          return response.data
+        } else {
+          return color
+        }
+      }))
     })
     .catch(error => {
       console.log("Error saving edit", error)
@@ -41,7 +44,7 @@ const BubblePage = () => {
     axiosWithAuth()
     .delete(`/colors/${colorToDelete.id}`)
     .then(response => {
-      setColors(colors.filter(color => color.id !== Number(response.id)))
+      setColors(colors.filter(color => color.id !== Number(response.data)))
     })
     .catch(error => {
       console.log("Deletion Error: ", error)
